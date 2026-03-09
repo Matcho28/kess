@@ -1,0 +1,89 @@
+/* =========================
+LAYOUT
+========================= */
+
+.app-shell {
+    min-height: 100vh;
+    display: flex;
+    align-items: stretch;
+    gap: 1rem;
+    padding: 1rem;
+    overflow: visible;
+    position: relative;
+}
+
+.app-main {
+    flex: 1;
+    min-width: 0;
+    overflow: visible;
+    position: relative;
+}
+
+.page-wrapper {
+    padding: 1.2rem;
+}
+
+.page-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+}
+
+.page-subtitle {
+    color: var(--muted);
+    margin-bottom: 1rem;
+}
+
+.module-card {
+    border: 1px solid #d8e2ee;
+    border-radius: 0.8rem;
+    background: #ffffff;
+}
+
+.module-card .card-header {
+    background: #ffffff;
+    border-bottom: 1px solid #e5edf6;
+}
+
+.status-pill {
+    font-size: 0.72rem;
+    border-radius: 999px;
+    padding: 0.2rem 0.55rem;
+    font-weight: 600;
+}
+
+.status-pill.active {
+    background: #d8f6e4;
+    color: #0c7a45;
+}
+
+.status-pill.inactive {
+    background: #ffe0e3;
+    color: #a22d3f;
+}
+
+.stat-card {
+    border: 1px solid #d8e2ee;
+    border-radius: 0.75rem;
+    background: #ffffff;
+    padding: 1rem;
+}
+
+.stat-label {
+    color: var(--muted);
+    font-size: 0.78rem;
+}
+
+.stat-value {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #1f3449;
+}
+
+@media (max-width: 767.98px) {
+    .app-shell {
+        flex-direction: column;
+        padding: 0.75rem;
+        gap: 0.75rem;
+    }
+}

@@ -1,0 +1,52 @@
+/* =========================
+USER MANAGEMENT
+========================= */
+
+.table-responsive {
+    border-radius: 0 0 0.8rem 0.8rem;
+}
+
+.table thead th {
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+    color: #526476;
+    text-transform: uppercase;
+}
+
+.table tbody td {
+    vertical-align: middle;
+}
+
+.form-control,
+.form-select {
+    border-radius: 0.75rem;
+    border-color: #d8e2ee;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: rgba(25, 195, 125, 0.55);
+    box-shadow: 0 0 0 0.2rem rgba(25, 195, 125, 0.12);
+}
+
+.form-check-input:checked {
+    background-color: var(--accent-strong);
+    border-color: var(--accent-strong);
+}
+
+.btn.btn-primary {
+    background: linear-gradient(135deg, #20c77e 0%, #14b46f 100%);
+    border-color: transparent;
+}
+
+.btn.btn-primary:hover,
+.btn.btn-primary:focus {
+    background: linear-gradient(135deg, #1cbd77 0%, #109f62 100%);
+    border-color: transparent;
+}
+
+@media (max-width: 1199.98px) {
+    .table-responsive {
+        border-radius: 0;
+    }
+}
