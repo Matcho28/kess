@@ -44,9 +44,9 @@ class DarkModeManager {
         // Add CSS styles
         button.style.cssText = `
             position: fixed;
-            top: 2rem;
+            top: 1rem;
             right: 2rem;
-            z-index: 1000;
+            z-index: 1001;
             background: var(--accent, #19c37d);
             color: white;
             border: none;
