@@ -218,6 +218,8 @@ $users = getAllUsersForManagement();
     <link rel="stylesheet" href="<?= e(baseUrl('/assets/css/layout.css')) ?>">
     <link rel="stylesheet" href="<?= e(baseUrl('/assets/css/sidebar.css')) ?>">
     <link rel="stylesheet" href="<?= e(baseUrl('/assets/css/users.css')) ?>">
+    <link rel="stylesheet" href="<?= e(baseUrl('/assets/css/darkmode.css')) ?>">
+    <link rel="stylesheet" href="<?= e(baseUrl('/assets/css/saas2026.css')) ?>">
 </head>
 <body>
 <div class="app-shell">
@@ -378,5 +380,6 @@ $users = getAllUsersForManagement();
     </main>
 </div>
 <script src="<?= e(baseUrl('/assets/js/sidebar.js')) ?>"></script>
+<script src="<?= e(baseUrl('/assets/js/darkmode.js')) ?>"></script>
 </body>
 </html>

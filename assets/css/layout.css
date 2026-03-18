@@ -6,8 +6,8 @@ LAYOUT
     min-height: 100vh;
     display: flex;
     align-items: stretch;
-    gap: 1rem;
-    padding: 1rem;
+    gap: 0;
+    padding: 0;
     overflow: visible;
     position: relative;
 }
@@ -17,6 +17,8 @@ LAYOUT
     min-width: 0;
     overflow: visible;
     position: relative;
+    margin-left: 260px;
+    height: 100vh;
 }
 
 .page-wrapper {

@@ -22,6 +22,8 @@ $conversationHint = $currentRole === ROLE_SUPER_ADMIN
     <link rel="stylesheet" href="<?= e(baseUrl('/assets/css/layout.css')) ?>">
     <link rel="stylesheet" href="<?= e(baseUrl('/assets/css/sidebar.css')) ?>">
     <link rel="stylesheet" href="<?= e(baseUrl('/assets/css/chat.css')) ?>">
+    <link rel="stylesheet" href="<?= e(baseUrl('/assets/css/darkmode.css')) ?>">
+    <link rel="stylesheet" href="<?= e(baseUrl('/assets/css/saas2026.css')) ?>">
 </head>
 <body>
 <div class="app-shell">
@@ -198,5 +200,6 @@ $conversationHint = $currentRole === ROLE_SUPER_ADMIN
 </script>
 <script src="<?= e(baseUrl('/assets/js/sidebar.js')) ?>"></script>
 <script src="<?= e(baseUrl('/assets/js/chat.js')) ?>"></script>
+<script src="<?= e(baseUrl('/assets/js/darkmode.js')) ?>"></script>
 </body>
 </html>

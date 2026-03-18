@@ -96,14 +96,9 @@ $roleLabel = $currentRole === ROLE_SUPER_ADMIN ? 'Super Admin' : 'Department Adm
     <title>Profile - Internal Complaint Chat</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= e(baseUrl('/assets/css/main.css')) ?>">
     <link rel="stylesheet" href="<?= e(baseUrl('/assets/css/layout.css')) ?>">
     <link rel="stylesheet" href="<?= e(baseUrl('/assets/css/sidebar.css')) ?>">
-    <link rel="stylesheet" href="<?= e(baseUrl('/assets/css/darkmode.css')) ?>">
-    <link rel="stylesheet" href="<?= e(baseUrl('/assets/css/saas2026.css')) ?>">
     <style>
         .profile-header {
             background: linear-gradient(135deg, #0B2D72 0%, #1a3f8a 100%);
@@ -243,7 +238,7 @@ $roleLabel = $currentRole === ROLE_SUPER_ADMIN ? 'Super Admin' : 'Department Adm
 
     <main class="app-main">
         <div class="page-wrapper">
-            <div class="profile-header glass-card fade-in-up">
+            <div class="profile-header">
                 <?php 
                 $profilePicture = $currentUser['profile_picture'] ?? '';
                 if (!empty($profilePicture) && file_exists(__DIR__ . '/../uploads/profiles/' . $profilePicture)) {
@@ -257,62 +252,53 @@ $roleLabel = $currentRole === ROLE_SUPER_ADMIN ? 'Super Admin' : 'Department Adm
             </div>
 
             <?php if ($message): ?>
-                <div class="alert alert-saas alert-success-saas mb-4 fade-in-up">
+                <div class="alert alert-modern alert-success-modern mb-4">
                     <i class="fas fa-check-circle me-2"></i><?= e($message) ?>
                 </div>
             <?php endif; ?>
 
             <?php if ($error): ?>
-                <div class="alert alert-saas alert-danger-saas mb-4 fade-in-up">
+                <div class="alert alert-modern alert-error-modern mb-4">
                     <i class="fas fa-exclamation-circle me-2"></i><?= e($error) ?>
                 </div>
             <?php endif; ?>
 
             <div class="row">
                 <div class="col-12 col-lg-6">
-                    <div class="card-saas fade-in-up" style="animation-delay: 0.1s;">
-                        <div class="card-header-saas">
-                            <h3 class="h5 mb-0 fw-semibold">
-                                <i class="fas fa-user me-2" style="color: var(--primary-500);"></i>
-                                Profile Information
+                    <div class="profile-card">
+                        <div class="card-header bg-white border-bottom">
+                            <h3 class="h6 mb-0 fw-semibold">
+                                <i class="fas fa-user me-2"></i>Profile Information
                             </h3>
                         </div>
-                        <div class="card-body-saas">
-                            <form method="POST" enctype="multipart/form-data" class="form-saas">
-                                <div class="form-group-saas">
-                                    <label class="form-label-saas">Full Name</label>
-                                    <input type="text" name="full_name" class="form-input-saas" 
+                        <div class="card-body">
+                            <form method="POST" enctype="multipart/form-data">
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">Full Name</label>
+                                    <input type="text" name="full_name" class="form-control form-control-modern" 
                                            value="<?= e((string) ($currentUser['full_name'] ?? '')) ?>" required>
                                 </div>
 
-                                <div class="row g-3">
-                                    <div class="col-md-6">
-                                        <div class="info-item glass-card">
-                                            <div class="info-label">Email</div>
-                                            <div class="info-value"><?= e((string) ($currentUser['email'] ?? '')) ?></div>
-                                        </div>
+                                <div class="info-grid">
+                                    <div class="info-item">
+                                        <div class="info-label">Email</div>
+                                        <div class="info-value"><?= e((string) ($currentUser['email'] ?? '')) ?></div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="info-item glass-card">
-                                            <div class="info-label">Department</div>
-                                            <div class="info-value"><?= e((string) ($currentUser['department_name'] ?? 'Not Assigned')) ?></div>
-                                        </div>
+                                    <div class="info-item">
+                                        <div class="info-label">Department</div>
+                                        <div class="info-value"><?= e((string) ($currentUser['department_name'] ?? 'Not Assigned')) ?></div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="info-item glass-card">
-                                            <div class="info-label">Role</div>
-                                            <div class="info-value"><?= e($roleLabel) ?></div>
-                                        </div>
+                                    <div class="info-item">
+                                        <div class="info-label">Role</div>
+                                        <div class="info-value"><?= e($roleLabel) ?></div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="info-item glass-card">
-                                            <div class="info-label">Member Since</div>
-                                            <div class="info-value"><?= e((string) ($currentUser['created_at'] ?? '')) ?></div>
-                                        </div>
+                                    <div class="info-item">
+                                        <div class="info-label">Member Since</div>
+                                        <div class="info-value"><?= e((string) ($currentUser['created_at'] ?? '')) ?></div>
                                     </div>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary-saas">
+                                <button type="submit" class="btn btn-modern">
                                     <i class="fas fa-save me-2"></i>Update Profile
                                 </button>
                             </form>
@@ -321,22 +307,21 @@ $roleLabel = $currentRole === ROLE_SUPER_ADMIN ? 'Super Admin' : 'Department Adm
                 </div>
 
                 <div class="col-12 col-lg-6">
-                    <div class="card-saas fade-in-up" style="animation-delay: 0.2s;">
-                        <div class="card-header-saas">
-                            <h3 class="h5 mb-0 fw-semibold">
-                                <i class="fas fa-camera me-2" style="color: var(--accent-500);"></i>
-                                Profile Picture
+                    <div class="profile-card">
+                        <div class="card-header bg-white border-bottom">
+                            <h3 class="h6 mb-0 fw-semibold">
+                                <i class="fas fa-camera me-2"></i>Profile Picture
                             </h3>
                         </div>
-                        <div class="card-body-saas">
-                            <form method="POST" enctype="multipart/form-data" class="form-saas">
-                                <div class="upload-area neuro-card">
-                                    <i class="fas fa-cloud-upload-alt fa-3x mb-3" style="color: var(--primary-500);"></i>
+                        <div class="card-body">
+                            <form method="POST" enctype="multipart/form-data">
+                                <div class="upload-area">
+                                    <i class="fas fa-cloud-upload-alt"></i>
                                     <h5 class="mb-2">Upload Profile Picture</h5>
                                     <p class="text-muted mb-3">JPG, PNG or GIF (Max 5MB)</p>
-                                    <input type="file" name="profile_picture" class="form-input-saas" accept="image/*" required>
+                                    <input type="file" name="profile_picture" class="form-control" accept="image/*" required>
                                 </div>
-                                <button type="submit" class="btn btn-primary-saas w-100 mt-3">
+                                <button type="submit" class="btn btn-modern w-100 mt-3">
                                     <i class="fas fa-upload me-2"></i>Upload Picture
                                 </button>
                             </form>
@@ -344,22 +329,21 @@ $roleLabel = $currentRole === ROLE_SUPER_ADMIN ? 'Super Admin' : 'Department Adm
                     </div>
 
                     <?php if ($currentRole === ROLE_SUPER_ADMIN): ?>
-                        <div class="card-saas fade-in-up" style="animation-delay: 0.3s;">
-                            <div class="card-header-saas">
-                                <h3 class="h5 mb-0 fw-semibold">
-                                    <i class="fas fa-palette me-2" style="color: var(--warning-500);"></i>
-                                    App Logo
+                        <div class="profile-card">
+                            <div class="card-header bg-white border-bottom">
+                                <h3 class="h6 mb-0 fw-semibold">
+                                    <i class="fas fa-palette me-2"></i>App Logo
                                 </h3>
                             </div>
-                            <div class="card-body-saas">
-                                <form method="POST" enctype="multipart/form-data" class="form-saas">
-                                    <div class="upload-area neuro-card">
-                                        <i class="fas fa-image fa-3x mb-3" style="color: var(--warning-500);"></i>
+                            <div class="card-body">
+                                <form method="POST" enctype="multipart/form-data">
+                                    <div class="upload-area">
+                                        <i class="fas fa-image"></i>
                                         <h5 class="mb-2">Update App Logo</h5>
                                         <p class="text-muted mb-3">JPG, PNG or SVG (Max 2MB)</p>
-                                        <input type="file" name="app_logo" class="form-input-saas" accept="image/*" required>
+                                        <input type="file" name="app_logo" class="form-control" accept="image/*" required>
                                     </div>
-                                    <button type="submit" class="btn btn-primary-saas w-100 mt-3">
+                                    <button type="submit" class="btn btn-modern w-100 mt-3">
                                         <i class="fas fa-paint-brush me-2"></i>Update Logo
                                     </button>
                                 </form>
@@ -372,6 +356,5 @@ $roleLabel = $currentRole === ROLE_SUPER_ADMIN ? 'Super Admin' : 'Department Adm
     </main>
 </div>
 <script src="<?= e(baseUrl('/assets/js/sidebar.js')) ?>"></script>
-<script src="<?= e(baseUrl('/assets/js/darkmode.js')) ?>"></script>
 </body>
 </html>

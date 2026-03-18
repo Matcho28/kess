@@ -1,0 +1,285 @@
+/* =========================
+DARK MODE STYLES
+========================= */
+
+body.dark-mode {
+    background: linear-gradient(180deg, #0f172a 0%, #1e293b 52%, #334155 100%);
+    color: #f1f5f9;
+}
+
+/* Dark mode for stat cards */
+body.dark-mode .stat-card-modern {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+body.dark-mode .stat-value-modern {
+    background: linear-gradient(135deg, #f1f5f9, #60a5fa);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+body.dark-mode .stat-label-modern {
+    color: #94a3b8;
+}
+
+/* Dark mode for modern cards */
+body.dark-mode .modern-card {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+body.dark-mode .modern-card .card-header {
+    background: linear-gradient(135deg, #334155 0%, #475569 100%);
+    border-bottom-color: rgba(59, 130, 246, 0.2);
+    color: #f1f5f9;
+}
+
+/* Dark mode for tables */
+body.dark-mode .table-modern thead {
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    color: #ffffff;
+}
+
+body.dark-mode .table-modern tbody tr:hover {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+}
+
+body.dark-mode .table-modern tbody td {
+    color: #f1f5f9;
+}
+
+/* Dark mode for forms */
+body.dark-mode .form-control,
+body.dark-mode .form-control-modern {
+    background: rgba(30, 41, 59, 0.9);
+    border-color: rgba(148, 163, 184, 0.3);
+    color: #f1f5f9;
+}
+
+body.dark-mode .form-control:focus,
+body.dark-mode .form-control-modern:focus {
+    background: rgba(30, 41, 59, 1);
+    border-color: #3b82f6;
+    color: #f1f5f9;
+}
+
+body.dark-mode .form-label {
+    color: #e2e8f0;
+}
+
+/* Dark mode for buttons */
+body.dark-mode .btn-outline-secondary {
+    background: rgba(30, 41, 59, 0.9);
+    border-color: rgba(148, 163, 184, 0.3);
+    color: #f1f5f9;
+}
+
+body.dark-mode .btn-outline-secondary:hover {
+    background: rgba(51, 65, 85, 0.9);
+    border-color: rgba(148, 163, 184, 0.5);
+    color: #f1f5f9;
+}
+
+/* Dark mode for search box */
+body.dark-mode .search-box input {
+    background: rgba(30, 41, 59, 0.9);
+    border-color: rgba(148, 163, 184, 0.3);
+    color: #f1f5f9;
+}
+
+/* Dark mode for alerts */
+body.dark-mode .alert {
+    background: rgba(30, 41, 59, 0.9);
+    border-color: rgba(148, 163, 184, 0.2);
+    color: #f1f5f9;
+}
+
+body.dark-mode .alert-info {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: rgba(59, 130, 246, 0.3);
+    color: #93c5fd;
+}
+
+body.dark-mode .alert-success {
+    background: rgba(34, 197, 94, 0.1);
+    border-color: rgba(34, 197, 94, 0.3);
+    color: #86efac;
+}
+
+body.dark-mode .alert-warning {
+    background: rgba(251, 146, 60, 0.1);
+    border-color: rgba(251, 146, 60, 0.3);
+    color: #fcd34d;
+}
+
+body.dark-mode .alert-danger {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: #fca5a5;
+}
+
+/* Dark mode for profile cards */
+body.dark-mode .profile-card {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+body.dark-mode .profile-card .card-header {
+    background: linear-gradient(135deg, #334155 0%, #475569 100%);
+    border-bottom-color: rgba(59, 130, 246, 0.2);
+    color: #f1f5f9;
+}
+
+body.dark-mode .info-item {
+    background: rgba(59, 130, 246, 0.1);
+    border-left-color: #3b82f6;
+}
+
+body.dark-mode .info-label {
+    color: #94a3b8;
+}
+
+body.dark-mode .info-value {
+    color: #f1f5f9;
+}
+
+body.dark-mode .upload-area {
+    background: rgba(59, 130, 246, 0.05);
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+body.dark-mode .upload-area:hover {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: rgba(59, 130, 246, 0.5);
+}
+
+/* Dark mode for badges */
+body.dark-mode .badge {
+    background: rgba(59, 130, 246, 0.2);
+    color: #93c5fd;
+}
+
+body.dark-mode .badge.bg-info {
+    background: rgba(59, 130, 246, 0.3) !important;
+    color: #93c5fd !important;
+}
+
+body.dark-mode .badge.bg-secondary {
+    background: rgba(148, 163, 184, 0.3) !important;
+    color: #cbd5e1 !important;
+}
+
+/* Dark mode for text elements */
+body.dark-mode .text-muted {
+    color: #94a3b8 !important;
+}
+
+body.dark-mode .text-primary {
+    color: #60a5fa !important;
+}
+
+body.dark-mode .text-success {
+    color: #86efac !important;
+}
+
+body.dark-mode .text-danger {
+    color: #fca5a5 !important;
+}
+
+body.dark-mode .text-warning {
+    color: #fcd34d !important;
+}
+
+body.dark-mode .text-info {
+    color: #93c5fd !important;
+}
+
+/* Dark mode for pagination */
+body.dark-mode .pagination .page-link {
+    background: rgba(30, 41, 59, 0.9);
+    border-color: rgba(148, 163, 184, 0.3);
+    color: #f1f5f9;
+}
+
+body.dark-mode .pagination .page-link:hover {
+    background: rgba(59, 130, 246, 0.2);
+    border-color: rgba(59, 130, 246, 0.4);
+    color: #f1f5f9;
+}
+
+body.dark-mode .pagination .page-item.active .page-link {
+    background: #3b82f6;
+    border-color: #3b82f6;
+    color: #ffffff;
+}
+
+/* Dark mode for modal */
+body.dark-mode .modal-content {
+    background: #1e293b;
+    border-color: rgba(148, 163, 184, 0.2);
+    color: #f1f5f9;
+}
+
+body.dark-mode .modal-header {
+    background: linear-gradient(135deg, #334155 0%, #475569 100%);
+    border-bottom-color: rgba(148, 163, 184, 0.2);
+    color: #f1f5f9;
+}
+
+body.dark-mode .modal-footer {
+    background: #334155;
+    border-top-color: rgba(148, 163, 184, 0.2);
+}
+
+/* Dark mode for dropdown */
+body.dark-mode .dropdown-menu {
+    background: #1e293b;
+    border-color: rgba(148, 163, 184, 0.2);
+}
+
+body.dark-mode .dropdown-item {
+    color: #f1f5f9;
+}
+
+body.dark-mode .dropdown-item:hover {
+    background: rgba(59, 130, 246, 0.2);
+    color: #f1f5f9;
+}
+
+body.dark-mode .dropdown-divider {
+    border-color: rgba(148, 163, 184, 0.2);
+}
+
+/* Dark mode for code */
+body.dark-mode pre,
+body.dark-mode code {
+    background: rgba(30, 41, 59, 0.8);
+    color: #e2e8f0;
+}
+
+/* Dark mode for blockquotes */
+body.dark-mode blockquote {
+    border-color: rgba(59, 130, 246, 0.3);
+    color: #cbd5e1;
+}
+
+/* Dark mode for hr */
+body.dark-mode hr {
+    border-color: rgba(148, 163, 184, 0.2);
+}
+
+/* Responsive adjustments for dark mode */
+@media (max-width: 768px) {
+    body.dark-mode .stat-value-modern {
+        font-size: 1.5rem;
+    }
+    
+    body.dark-mode .dark-mode-toggle {
+        top: 1rem;
+        right: 1rem;
+        width: 40px;
+        height: 40px;
+    }
+}
