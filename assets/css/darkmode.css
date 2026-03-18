@@ -3,8 +3,8 @@ DARK MODE STYLES
 ========================= */
 
 body.dark-mode {
-    background: linear-gradient(180deg, #0f172a 0%, #1e293b 52%, #334155 100%);
-    color: #f1f5f9;
+    background: linear-gradient(180deg, #9CCFFF 0%, #7FB8E8 52%, #5FA3D3 100%);
+    color: #0f172a;
 }
 
 /* Dark mode for stat cards */

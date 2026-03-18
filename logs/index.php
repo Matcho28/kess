@@ -3,16 +3,17 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/navigation.php';
+require_once __DIR__ . '/../config/database.php';
 
 requireLogin();
 
 // Get recent messages data
-$pdo = getPDO();
+$pdo = db();
 $stmt = $pdo->prepare("
     SELECT 
         m.created_at,
         m.message_text,
-        m.has_attachment,
+        (SELECT COUNT(*) FROM message_files mf WHERE mf.message_id = m.id) > 0 AS has_attachment,
         u1.full_name AS sender_name,
         u1.role AS sender_role,
         u2.full_name AS receiver_name,
@@ -71,7 +72,7 @@ function dashboardRoleLabel(string $role): string
                 <div class="card-header-saas">
                     <h3 class="h5 mb-0 fw-semibold">
                         <i class="fas fa-comments me-2" style="color: var(--primary-500);"></i>
-                        Recent Complaint Chat Messages
+                        Recent Chat Messages
                     </h3>
                 </div>
                 <div class="card-body-saas p-0">
@@ -163,7 +164,9 @@ function dashboardRoleLabel(string $role): string
 </div>
 
 <script src="<?= e(baseUrl('/assets/js/sidebar.js')) ?>"></script>
-<script src="<?= e(baseUrl('/assets/js/darkmode.js')) ?>"></script>
+</body>
+</html>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Search functionality

@@ -20,8 +20,11 @@
         attachmentTrigger: document.getElementById('attachmentTrigger'),
         attachmentInput: document.getElementById('attachmentInput'),
         attachmentPreview: document.getElementById('attachmentPreview'),
+        attachmentIcon: document.getElementById('attachmentIcon'),
         attachmentName: document.getElementById('attachmentName'),
+        attachmentSize: document.getElementById('attachmentSize'),
         attachmentRemove: document.getElementById('attachmentRemove'),
+        uploadArea: document.getElementById('uploadArea'),
         emojiTrigger: document.getElementById('emojiTrigger'),
         emojiPicker: document.getElementById('emojiPicker'),
         emojiPickerClose: document.getElementById('emojiPickerClose'),
@@ -44,6 +47,73 @@
 
     function isMobileViewport() {
         return window.innerWidth <= 767;
+    }
+
+    function getFileIcon(file) {
+        const extension = file.name.split('.').pop().toLowerCase();
+        const iconMap = {
+            'pdf': '📄',
+            'doc': '📝',
+            'docx': '📝',
+            'jpg': '🖼️',
+            'jpeg': '🖼️',
+            'png': '🖼️',
+            'gif': '🖼️',
+            'webp': '🖼️'
+        };
+        return iconMap[extension] || '📎';
+    }
+
+    function getFileIconClass(file) {
+        const extension = file.name.split('.').pop().toLowerCase();
+        if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(extension)) {
+            return 'img';
+        }
+        return extension;
+    }
+
+    function formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+
+    function showAttachmentPreview(file) {
+        if (!refs.attachmentPreview || !refs.attachmentIcon || !refs.attachmentName || !refs.attachmentSize) {
+            return;
+        }
+
+        // Set file info
+        refs.attachmentName.textContent = file.name;
+        refs.attachmentSize.textContent = formatFileSize(file.size);
+        
+        // Set icon
+        if (file.type.startsWith('image/')) {
+            const img = document.createElement('img');
+            img.src = URL.createObjectURL(file);
+            img.className = 'attachment-preview-icon image';
+            img.alt = file.name;
+            refs.attachmentIcon.innerHTML = '';
+            refs.attachmentIcon.appendChild(img);
+        } else {
+            const iconClass = getFileIconClass(file);
+            refs.attachmentIcon.className = `attachment-preview-icon ${iconClass}`;
+            refs.attachmentIcon.textContent = getFileIcon(file);
+        }
+
+        // Show preview
+        refs.attachmentPreview.classList.add('active');
+    }
+
+    function hideAttachmentPreview() {
+        if (refs.attachmentPreview) {
+            refs.attachmentPreview.classList.remove('active');
+        }
+        if (refs.attachmentInput) {
+            refs.attachmentInput.value = '';
+        }
     }
 
     function setChatSidebarCollapsed(collapsed) {
@@ -484,9 +554,7 @@ async function handleChatSubmit(event) {
         refs.attachmentInput.value = '';
         
         // Hide attachment preview after sending
-        if (refs.attachmentPreview) {
-            refs.attachmentPreview.style.display = 'none';
-        }
+        hideAttachmentPreview();
 
         await loadMessages({ forceScroll: true });
         await loadConversations({ autoSelectFirst: false });
@@ -509,24 +577,67 @@ function bindEvents() {
     }
 
     // Handle file selection to show preview
-    if (refs.attachmentInput && refs.attachmentPreview && refs.attachmentName) {
+    if (refs.attachmentInput && refs.attachmentPreview) {
         refs.attachmentInput.addEventListener('change', (event) => {
             const file = event.target.files[0];
             if (file) {
-                refs.attachmentName.textContent = file.name;
-                refs.attachmentPreview.style.display = 'block';
+                showAttachmentPreview(file);
             } else {
-                refs.attachmentPreview.style.display = 'none';
+                hideAttachmentPreview();
             }
         });
     }
 
     // Handle attachment removal
-    if (refs.attachmentRemove && refs.attachmentInput && refs.attachmentPreview) {
+    if (refs.attachmentRemove) {
         refs.attachmentRemove.addEventListener('click', () => {
-            refs.attachmentInput.value = '';
-            refs.attachmentPreview.style.display = 'none';
+            hideAttachmentPreview();
         });
+    }
+
+    // Handle drag and drop
+    if (refs.uploadArea && refs.attachmentInput) {
+        const chatInputWrap = refs.messageInput?.closest('.chat-input-wrap');
+        
+        if (chatInputWrap) {
+            // Prevent default drag behaviors
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                chatInputWrap.addEventListener(eventName, preventDefaults, false);
+                document.body.addEventListener(eventName, preventDefaults, false);
+            });
+
+            // Highlight drop area when item is dragged over it
+            ['dragenter', 'dragover'].forEach(eventName => {
+                chatInputWrap.addEventListener(eventName, () => {
+                    refs.uploadArea.classList.add('active');
+                }, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                chatInputWrap.addEventListener(eventName, () => {
+                    refs.uploadArea.classList.remove('active');
+                }, false);
+            });
+
+            // Handle dropped files
+            chatInputWrap.addEventListener('drop', (event) => {
+                const files = event.dataTransfer.files;
+                if (files.length > 0) {
+                    refs.attachmentInput.files = files;
+                    showAttachmentPreview(files[0]);
+                }
+            }, false);
+
+            // Allow clicking upload area to browse files
+            refs.uploadArea.addEventListener('click', () => {
+                refs.attachmentInput.click();
+            });
+        }
+    }
+
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
     }
 
     if (refs.emojiTrigger) {

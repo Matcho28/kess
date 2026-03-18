@@ -29,7 +29,7 @@ function getNavigationItemsForRole(string $role): array
     if ($role === ROLE_SUPER_ADMIN) {
         return [
             ['key' => 'dashboard', 'label' => 'Dashboard', 'path' => '/dashboard/index.php'],
-            ['key' => 'logs', 'label' => 'Logs', 'path' => '/dashboard/logs.php'],
+            ['key' => 'logs', 'label' => 'Logs', 'path' => '/logs/index.php'],
             ['key' => 'chats', 'label' => 'Chats', 'path' => '/chat/index.php'],
             ['key' => 'users', 'label' => 'User Management', 'path' => '/users/index.php'],
             ['key' => 'departments', 'label' => 'Departments', 'path' => '/departments/index.php'],
