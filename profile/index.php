@@ -105,6 +105,10 @@ $roleLabel = $currentRole === ROLE_SUPER_ADMIN ? 'Super Admin' : 'Department Adm
     <link rel="stylesheet" href="<?= e(baseUrl('/assets/css/darkmode.css')) ?>">
     <link rel="stylesheet" href="<?= e(baseUrl('/assets/css/saas2026.css')) ?>">
     <style>
+        body {
+            background: white !important;
+        }
+        
         .profile-header {
             background: linear-gradient(135deg, #0B2D72 0%, #1a3f8a 100%);
             color: white;

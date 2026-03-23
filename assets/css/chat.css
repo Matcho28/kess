@@ -246,8 +246,8 @@ CHAT PAGE
 }
 
 .message-row.sent .message-bubble {
-    background: var(--outgoing-bg);
-    color: var(--outgoing-color);
+    background: linear-gradient(135deg, #87CEEB, #5DADE2);
+    color: white;
     border-bottom-right-radius: 0.4rem;
     border-color: transparent;
 }

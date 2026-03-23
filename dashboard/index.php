@@ -36,6 +36,10 @@ function dashboardRoleLabel(string $role): string
     <link rel="stylesheet" href="<?= e(baseUrl('/assets/css/darkmode.css')) ?>">
     <link rel="stylesheet" href="<?= e(baseUrl('/assets/css/saas2026.css')) ?>">
     <style>
+        body {
+            background: white !important;
+        }
+        
         .dashboard-stats {
             animation: fadeInUp 0.6s ease-out;
         }

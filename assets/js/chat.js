@@ -17,13 +17,12 @@
         chatForm: document.getElementById('chatForm'),
         recipientId: document.getElementById('recipientId'),
         messageInput: document.getElementById('messageInput'),
+        chatInputWrap: document.querySelector('.chat-input-wrap'),
         attachmentTrigger: document.getElementById('attachmentTrigger'),
         attachmentInput: document.getElementById('attachmentInput'),
-        attachmentPreview: document.getElementById('attachmentPreview'),
-        attachmentIcon: document.getElementById('attachmentIcon'),
-        attachmentName: document.getElementById('attachmentName'),
-        attachmentSize: document.getElementById('attachmentSize'),
-        attachmentRemove: document.getElementById('attachmentRemove'),
+        attachmentRemoveBtn: document.getElementById('attachmentRemoveBtn'),
+        attachmentIndicator: document.getElementById('attachmentIndicator'),
+        attachmentIndicatorText: document.getElementById('attachmentIndicatorText'),
         uploadArea: document.getElementById('uploadArea'),
         emojiTrigger: document.getElementById('emojiTrigger'),
         emojiPicker: document.getElementById('emojiPicker'),
@@ -81,38 +80,39 @@
     }
 
     function showAttachmentPreview(file) {
-        if (!refs.attachmentPreview || !refs.attachmentIcon || !refs.attachmentName || !refs.attachmentSize) {
+        if (!refs.chatInputWrap || !refs.attachmentInput || !refs.messageInput) {
             return;
         }
 
-        // Set file info
-        refs.attachmentName.textContent = file.name;
-        refs.attachmentSize.textContent = formatFileSize(file.size);
+        // Add attachment class to input wrapper
+        refs.chatInputWrap.classList.add('has-attachment');
         
-        // Set icon
-        if (file.type.startsWith('image/')) {
-            const img = document.createElement('img');
-            img.src = URL.createObjectURL(file);
-            img.className = 'attachment-preview-icon image';
-            img.alt = file.name;
-            refs.attachmentIcon.innerHTML = '';
-            refs.attachmentIcon.appendChild(img);
-        } else {
-            const iconClass = getFileIconClass(file);
-            refs.attachmentIcon.className = `attachment-preview-icon ${iconClass}`;
-            refs.attachmentIcon.textContent = getFileIcon(file);
+        // Update attachment indicator text
+        if (refs.attachmentIndicatorText) {
+            const fileName = file.name.length > 15 ? file.name.substring(0, 12) + '...' : file.name;
+            refs.attachmentIndicatorText.textContent = fileName;
         }
-
-        // Show preview
-        refs.attachmentPreview.classList.add('active');
+        
+        // Focus the input
+        refs.messageInput.focus();
     }
 
     function hideAttachmentPreview() {
-        if (refs.attachmentPreview) {
-            refs.attachmentPreview.classList.remove('active');
+        // Remove attachment class from input wrapper
+        if (refs.chatInputWrap) {
+            refs.chatInputWrap.classList.remove('has-attachment');
         }
+        
         if (refs.attachmentInput) {
             refs.attachmentInput.value = '';
+        }
+        
+        // Remove filename from message input
+        if (refs.messageInput) {
+            const currentMessage = refs.messageInput.value;
+            // Remove the file reference (📎 filename) from the message
+            const cleanedMessage = currentMessage.replace(/\n\n📎.*$/gm, '').trim();
+            refs.messageInput.value = cleanedMessage;
         }
     }
 
@@ -577,22 +577,33 @@ function bindEvents() {
     }
 
     // Handle file selection to show preview
-    if (refs.attachmentInput && refs.attachmentPreview) {
+    if (refs.attachmentInput) {
         refs.attachmentInput.addEventListener('change', (event) => {
             const file = event.target.files[0];
             if (file) {
                 showAttachmentPreview(file);
             } else {
-                hideAttachmentPreview();
+                clearAttachment();
             }
         });
     }
 
-    // Handle attachment removal
-    if (refs.attachmentRemove) {
-        refs.attachmentRemove.addEventListener('click', () => {
-            hideAttachmentPreview();
+    // Handle attachment removal - Clear file when user removes attachment
+    if (refs.attachmentRemoveBtn) {
+        refs.attachmentRemoveBtn.addEventListener('click', () => {
+            clearAttachment();
         });
+    }
+
+    function clearAttachment() {
+        // Remove attachment class from input wrapper
+        if (refs.chatInputWrap) {
+            refs.chatInputWrap.classList.remove('has-attachment');
+        }
+        
+        if (refs.attachmentInput) {
+            refs.attachmentInput.value = '';
+        }
     }
 
     // Handle drag and drop

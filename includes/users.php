@@ -17,10 +17,10 @@ function isValidUserRole(string $role): bool
 function getUserRoleLabel(string $role): string
 {
     if ($role === ROLE_SUPER_ADMIN) {
-        return 'Super Admin';
+        return 'Admin';
     }
 
-    return 'Department Admin';
+    return 'Editor';
 }
 
 /**
@@ -196,4 +196,17 @@ function updateUserActiveState(int $userId, int $isActive): void
 {
     $statement = db()->prepare('UPDATE users SET is_active = ? WHERE id = ?');
     $statement->execute([$isActive, $userId]);
+}
+
+/**
+ * Updates only the assigned role for a user.
+ */
+function updateManagedUserRole(int $userId, string $role): void
+{
+    if (!isValidUserRole($role)) {
+        throw new InvalidArgumentException('Selected role is invalid.');
+    }
+
+    $statement = db()->prepare('UPDATE users SET role = ? WHERE id = ?');
+    $statement->execute([$role, $userId]);
 }

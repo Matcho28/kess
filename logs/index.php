@@ -48,6 +48,11 @@ function dashboardRoleLabel(string $role): string
     <link rel="stylesheet" href="<?= e(baseUrl('/assets/css/sidebar.css')) ?>">
     <link rel="stylesheet" href="<?= e(baseUrl('/assets/css/darkmode.css')) ?>">
     <link rel="stylesheet" href="<?= e(baseUrl('/assets/css/saas2026.css')) ?>">
+    <style>
+        body {
+            background: white !important;
+        }
+    </style>
 </head>
 <body>
 <div class="app-shell">
