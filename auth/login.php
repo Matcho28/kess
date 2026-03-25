@@ -287,6 +287,158 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             transform: translateY(0);
         }
 
+        .btn-login.loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .btn-login .btn-text {
+            display: inline-block;
+            transition: opacity 0.3s ease;
+        }
+
+        .btn-login.loading .btn-text {
+            opacity: 0;
+        }
+
+        .btn-login .spinner {
+            display: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto;
+        }
+
+        .btn-login.loading .spinner {
+            display: block;
+        }
+
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        .login-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .loading-modal {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: var(--glass-shadow);
+            max-width: 320px;
+            width: 90%;
+            transform: scale(0.9) translateY(20px);
+            opacity: 0;
+            transition: transform 0.5s cubic-bezier(0.4, 0.0, 0.2, 1), opacity 0.5s ease;
+        }
+
+        .login-overlay.active .loading-modal {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        .loading-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 16px 32px -12px rgba(99, 102, 241, 0.6);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .loading-icon i {
+            font-size: 1.8rem;
+            color: #ffffff;
+            animation: rotate 2s linear infinite;
+        }
+
+        .loading-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .loading-message {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .loading-progress {
+            display: flex;
+            gap: 0.4rem;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .progress-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--primary-500);
+            opacity: 0.3;
+            animation: progressPulse 1.5s ease-in-out infinite;
+        }
+
+        .progress-dot:nth-child(1) { animation-delay: 0s; }
+        .progress-dot:nth-child(2) { animation-delay: 0.2s; }
+        .progress-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        .loading-status {
+            font-size: 0.78rem;
+            color: var(--text-dim);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes progressPulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
         .alert-danger {
             background: rgba(239, 68, 68, 0.1);
             border: 1px solid rgba(239, 68, 68, 0.2);
@@ -343,6 +495,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </style>
 </head>
 <body class="d-flex align-items-center py-4">
+<!-- Loading Overlay -->
+<div class="login-overlay" id="loadingOverlay">
+    <div class="loading-modal">
+        <div class="loading-icon">
+            <i class="fas fa-cog"></i>
+        </div>
+        <h2 class="loading-title">Initializing System</h2>
+        <p class="loading-message">Verifying credentials and preparing your workspace...</p>
+        <div class="loading-progress">
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+        </div>
+        <div class="loading-status" id="loadingStatus">Authenticating...</div>
+    </div>
+</div>
+
 <main class="container login-container">
     <div class="login-card" id="loginCard">
         <!-- Welcome Side (Front) -->
@@ -382,7 +551,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label for="password" class="form-label">Password</label>
                     <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
                 </div>
-                <button type="submit" class="btn-login">Sign In</button>
+                <button type="submit" class="btn-login" id="loginBtn">
+    <span class="btn-text">Sign In</span>
+    <div class="spinner"></div>
+</button>
             </form>
 
             <div class="divider"></div>
@@ -410,6 +582,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 function flipCard() {
     document.getElementById('loginCard').classList.add('flipped');
 }
+
+// Login animation
+document.addEventListener('DOMContentLoaded', function() {
+    const loginForm = document.querySelector('form[method="post"]');
+    const loginBtn = document.getElementById('loginBtn');
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    const loadingStatus = document.getElementById('loadingStatus');
+    
+    if (loginForm && loginBtn && loadingOverlay) {
+        loginForm.addEventListener('submit', function(e) {
+            // Prevent immediate submission
+            e.preventDefault();
+            
+            // Show loading state
+            loginBtn.classList.add('loading');
+            
+            // Force reflow to ensure transition works
+            loadingOverlay.offsetHeight;
+            
+            loadingOverlay.classList.add('active');
+            
+            // Animate status messages
+            const statusMessages = [
+                'Authenticating...',
+                'Verifying credentials...',
+                'Initializing workspace...',
+                'Loading user profile...',
+                'Preparing dashboard...'
+            ];
+            
+            let messageIndex = 0;
+            const statusInterval = setInterval(() => {
+                if (messageIndex < statusMessages.length) {
+                    loadingStatus.textContent = statusMessages[messageIndex];
+                    messageIndex++;
+                }
+            }, 600);
+            
+            // After 3 seconds, fade out and submit
+            setTimeout(() => {
+                clearInterval(statusInterval);
+                
+                // Fade out animation
+                loadingOverlay.classList.remove('active');
+                
+                // Wait for fade out to complete before submitting
+                setTimeout(() => {
+                    loginForm.submit();
+                }, 400);
+            }, 3000);
+        });
+    }
+});
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-Yvpcr1f6F/VdtEaJrxi2ZKJ" crossorigin="anonymous"></script>
 </body>
