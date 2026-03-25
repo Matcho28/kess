@@ -808,5 +808,6 @@ $conversationHint = $currentRole === ROLE_SUPER_ADMIN
 </script>
 <script src="<?= e(baseUrl('/assets/js/sidebar.js')) ?>"></script>
 <script src="<?= e(baseUrl('/assets/js/chat.js')) ?>"></script>
+<script src="<?= e(baseUrl('/assets/js/darkmode.js')) ?>"></script>
 </body>
 </html>

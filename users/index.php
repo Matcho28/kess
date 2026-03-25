@@ -979,6 +979,7 @@ $users = getAllUsersForManagement();
 </div>
 
 <script src="<?= e(baseUrl('/assets/js/sidebar.js')) ?>"></script>
+<script src="<?= e(baseUrl('/assets/js/darkmode.js')) ?>"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('roleModal');

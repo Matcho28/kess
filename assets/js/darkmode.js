@@ -35,6 +35,11 @@ class DarkModeManager {
             return;
         }
 
+        // Only create button on dashboard page
+        if (!window.location.pathname.includes('/dashboard/')) {
+            return;
+        }
+
         const button = document.createElement('button');
         button.id = 'darkModeToggle';
         button.className = 'dark-mode-toggle';
@@ -77,14 +82,15 @@ class DarkModeManager {
 
     addEventListeners() {
         const toggleButton = document.getElementById('darkModeToggle');
-        if (!toggleButton) return;
+        
+        // Add button click listener only if button exists (dashboard only)
+        if (toggleButton) {
+            toggleButton.addEventListener('click', () => {
+                this.toggleDarkMode();
+            });
+        }
 
-        // Toggle dark mode on button click
-        toggleButton.addEventListener('click', () => {
-            this.toggleDarkMode();
-        });
-
-        // Keyboard shortcut (Ctrl/Cmd + D)
+        // Keyboard shortcut (Ctrl/Cmd + D) - works on all pages
         document.addEventListener('keydown', (e) => {
             if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
                 e.preventDefault();
@@ -92,7 +98,7 @@ class DarkModeManager {
             }
         });
 
-        // Listen for system theme changes
+        // Listen for system theme changes - works on all pages
         if (window.matchMedia) {
             const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
             mediaQuery.addListener((e) => {

@@ -88,9 +88,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .login-card {
             border: 1px solid var(--glass-border);
             border-radius: 24px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(24px);
-            box-shadow: var(--glass-shadow);
+            background: #ffffff;
+            box-shadow: 0 20px 50px -28px rgba(15, 23, 42, 0.35);
             padding: 0;
             position: relative;
             width: 100%;
@@ -105,9 +104,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             width: 100%;
             height: 100%;
             border-radius: 24px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(24px);
-            box-shadow: var(--glass-shadow);
+            background: #ffffff;
+            box-shadow: 0 20px 50px -28px rgba(15, 23, 42, 0.35);
             border: 1px solid var(--glass-border);
             box-sizing: border-box;
         }
@@ -166,14 +164,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .welcome-title {
             font-size: 1.8rem;
             font-weight: 800;
-            color: var(--text-primary);
+            color: #0f172a;
             margin-bottom: 0.5rem;
             letter-spacing: -0.02em;
         }
 
         .welcome-subtitle {
             font-size: 0.96rem;
-            color: var(--text-muted);
+            color: #64748b;
             font-weight: 500;
             margin-bottom: 2rem;
             line-height: 1.5;
@@ -222,14 +220,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .login-title {
             font-size: 1.5rem;
             font-weight: 800;
-            color: var(--text-primary);
+            color: #0f172a;
             margin-bottom: 0.25rem;
             letter-spacing: -0.02em;
         }
 
         .login-subtitle {
             font-size: 0.92rem;
-            color: var(--text-muted);
+            color: #64748b;
             font-weight: 500;
             margin: 0;
         }
@@ -237,29 +235,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .form-label {
             font-size: 0.85rem;
             font-weight: 700;
-            color: var(--text-primary);
+            color: #0f172a;
             margin-bottom: 0.5rem;
             text-transform: uppercase;
             letter-spacing: 0.06em;
         }
 
         .form-control {
-            background: var(--input-bg);
-            border: 1px solid var(--input-border);
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
             border-radius: 16px;
             padding: 0.85rem 1.1rem;
             font-size: 0.96rem;
-            color: var(--text-primary);
+            color: #0f172a;
             transition: all 0.22s ease;
         }
 
         .form-control::placeholder {
-            color: var(--text-dim);
+            color: #94a3b8;
         }
 
         .form-control:focus {
             border-color: var(--input-focus-border);
-            background: var(--input-focus-bg);
+            background: #ffffff;
             box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.12);
             outline: none;
         }
@@ -449,40 +447,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             margin-bottom: 1.5rem;
         }
 
-        .divider {
-            border: none;
-            height: 1px;
-            background: var(--glass-border);
-            margin: 2rem 0;
-        }
-
-        .test-users {
-            text-align: center;
-            margin-top: 1.5rem;
-        }
-
-        .test-users-title {
-            font-size: 0.78rem;
-            font-weight: 700;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            margin-bottom: 0.75rem;
-        }
-
-        .test-user-item {
-            font-size: 0.82rem;
-            color: var(--text-muted);
-            line-height: 1.5;
-            margin-bottom: 0.25rem;
-        }
-
-        .test-user-item i {
-            width: 16px;
-            margin-right: 0.45rem;
-            color: var(--text-dim);
-        }
-
         @media (max-width: 480px) {
             .login-container {
                 padding: 0.75rem;
@@ -556,24 +520,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="spinner"></div>
 </button>
             </form>
-
-            <div class="divider"></div>
-
-            <div class="test-users">
-                <div class="test-users-title">Test Users</div>
-                <div class="test-user-item">
-                    <i class="fas fa-user-shield"></i>
-                    super.admin@org.local / Admin@123
-                </div>
-                <div class="test-user-item">
-                    <i class="fas fa-user-tie"></i>
-                    admin.a@org.local / Admin@123
-                </div>
-                <div class="test-user-item">
-                    <i class="fas fa-user-tie"></i>
-                    admin.b@org.local / Admin@123
-                </div>
-            </div>
         </div>
     </div>
 </main>
@@ -637,5 +583,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-Yvpcr1f6F/VdtEaJrxi2ZKJ" crossorigin="anonymous"></script>
+<script src="<?= e(baseUrl('/assets/js/darkmode.js')) ?>"></script>
 </body>
 </html>

@@ -144,5 +144,6 @@ $departments = getDepartmentsWithUserCounts();
 </div>
 
 <script src="<?= e(baseUrl('/assets/js/sidebar.js')) ?>"></script>
+<script src="<?= e(baseUrl('/assets/js/darkmode.js')) ?>"></script>
 </body>
 </html>
