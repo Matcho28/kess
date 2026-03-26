@@ -22,31 +22,89 @@ function getNavigationIconSvg(string $key): string
 }
 
 /**
- * Returns role-specific navigation links.
+ * Returns role-specific navigation items with grouped structure.
  */
 function getNavigationItemsForRole(string $role): array
 {
     if ($role === ROLE_SUPER_ADMIN) {
         return [
-            ['key' => 'dashboard', 'label' => 'Dashboard', 'path' => '/dashboard/index.php'],
-            ['key' => 'logs', 'label' => 'Logs', 'path' => '/logs/index.php'],
-            ['key' => 'chats', 'label' => 'Chats', 'path' => '/chat/index.php'],
-            ['key' => 'users', 'label' => 'User Management', 'path' => '/users/index.php'],
-            ['key' => 'departments', 'label' => 'Departments', 'path' => '/departments/index.php'],
-            ['key' => 'profile', 'label' => 'Profile', 'path' => '/profile/index.php'],
-            ['key' => 'logout', 'label' => 'Logout', 'path' => '/auth/logout.php'],
+            // DASHBOARD & GENERAL (Top Level)
+            [
+                'section' => 'DASHBOARD & GENERAL',
+                'items' => [
+                    ['key' => 'dashboard', 'label' => 'Dashboard', 'path' => '/dashboard/index.php'],
+                    ['key' => 'logs', 'label' => 'Logs', 'path' => '/logs/index.php'],
+                    ['key' => 'chats', 'label' => 'Chats', 'path' => '/chat/index.php'],
+                    ['key' => 'users', 'label' => 'User Management', 'path' => '/users/index.php'],
+                    ['key' => 'departments', 'label' => 'Departments', 'path' => '/departments/index.php'],
+                    ['key' => 'profile', 'label' => 'Profile', 'path' => '/profile/index.php']
+                ]
+            ],
+            // SYSTEM MODULES
+            [
+                'section' => 'SYSTEM MODULES',
+                'items' => []
+            ],
+            // ADMINISTRATIVE SUPPORT SERVICES
+            [
+                'section' => 'ADMINISTRATIVE SUPPORT SERVICES',
+                'items' => [
+                    ['key' => 'request-form', 'label' => 'Request Form', 'path' => '#'],
+                    ['key' => 'request-records', 'label' => 'Request Records (view and print)', 'path' => '#']
+                ]
+            ],
+            // BROADCAST UNIT
+            [
+                'section' => 'BROADCAST UNIT',
+                'items' => [
+                    ['key' => 'interactive-calendar', 'label' => 'Interactive Calendar', 'path' => '#']
+                ]
+            ],
+            // RESEARCH UNIT
+            [
+                'section' => 'RESEARCH UNIT',
+                'items' => [
+                    ['key' => 'client-satisfaction', 'label' => 'Client Satisfaction Form', 'path' => '#']
+                ]
+            ],
+            // PRINT AND OTHER MEDIA SERVICES UNIT
+            [
+                'section' => 'PRINT AND OTHER MEDIA SERVICES UNIT',
+                'items' => [
+                    ['key' => 'print-calendar', 'label' => 'Interactive Calendar', 'path' => '#']
+                ]
+            ],
+            // LOGOUT
+            [
+                'section' => '',
+                'items' => [
+                    ['key' => 'logout', 'label' => 'Logout', 'path' => '/auth/logout.php']
+                ]
+            ]
         ];
     }
 
     return [
-        ['key' => 'chats', 'label' => 'Chats', 'path' => '/chat/index.php'],
-        ['key' => 'profile', 'label' => 'Profile', 'path' => '/profile/index.php'],
-        ['key' => 'logout', 'label' => 'Logout', 'path' => '/auth/logout.php'],
+        // GENERAL (for Department Admin)
+        [
+            'section' => 'GENERAL',
+            'items' => [
+                ['key' => 'chats', 'label' => 'Chats', 'path' => '/chat/index.php'],
+                ['key' => 'profile', 'label' => 'Profile', 'path' => '/profile/index.php']
+            ]
+        ],
+        // LOGOUT
+        [
+            'section' => '',
+            'items' => [
+                ['key' => 'logout', 'label' => 'Logout', 'path' => '/auth/logout.php']
+            ]
+        ]
     ];
 }
 
 /**
- * Renders the left application navigation sidebar.
+ * Renders the left application navigation sidebar with grouped sections.
  */
 function renderNavigationSidebar(string $activeKey): void
 {
@@ -54,18 +112,7 @@ function renderNavigationSidebar(string $activeKey): void
     $currentRole = getCurrentUserRole();
     $roleLabel = $currentRole === ROLE_SUPER_ADMIN ? 'Super Admin' : 'Department Admin';
 
-    $items = getNavigationItemsForRole($currentRole);
-    $logoutItem = null;
-    $primaryItems = [];
-
-    foreach ($items as $item) {
-        if (($item['key'] ?? '') === 'logout') {
-            $logoutItem = $item;
-            continue;
-        }
-
-        $primaryItems[] = $item;
-    }
+    $sections = getNavigationItemsForRole($currentRole);
 
     echo '<aside class="main-nav" id="appSidebar" aria-expanded="true">';
     echo '<div class="main-nav-topbar">';
@@ -86,30 +133,37 @@ function renderNavigationSidebar(string $activeKey): void
     echo '<div class="main-nav-body">';
     echo '<nav class="main-nav-links" aria-label="Main navigation">';
 
-    foreach ($primaryItems as $item) {
-        $isActive = $item['key'] === $activeKey;
-        $classes = 'main-nav-link' . ($isActive ? ' active' : '');
-        $icon = getNavigationIconSvg((string) $item['key']);
+    foreach ($sections as $section) {
+        // Skip empty sections
+        if (empty($section['items'])) {
+            continue;
+        }
 
-        echo '<a class="' . e($classes) . '" href="' . e(baseUrl($item['path'])) . '" data-tooltip="' . e((string) $item['label']) . '" title="' . e((string) $item['label']) . '">';
-        echo '<span class="main-nav-link-icon">' . $icon . '</span>';
-        echo '<span class="main-nav-link-label">' . e($item['label']) . '</span>';
-        echo '</a>';
+        // Render section title if exists
+        if (!empty($section['section'])) {
+            echo '<div class="nav-section">';
+            echo '<div class="nav-section-title">' . e($section['section']) . '</div>';
+        }
+
+        // Render section items
+        foreach ($section['items'] as $item) {
+            $isActive = $item['key'] === $activeKey;
+            $classes = 'main-nav-link' . ($isActive ? ' active' : '');
+            $icon = getNavigationIconSvg((string) $item['key']);
+
+            echo '<a class="' . e($classes) . '" href="' . e(baseUrl($item['path'])) . '" data-tooltip="' . e((string) $item['label']) . '" title="' . e((string) $item['label']) . '">';
+            echo '<span class="main-nav-link-icon">' . $icon . '</span>';
+            echo '<span class="main-nav-link-label">' . e($item['label']) . '</span>';
+            echo '</a>';
+        }
+
+        // Close section if opened
+        if (!empty($section['section'])) {
+            echo '</div>';
+        }
     }
 
     echo '</nav>';
-
-    if ($logoutItem !== null) {
-        $isActive = $logoutItem['key'] === $activeKey;
-        $classes = 'main-nav-link main-nav-link-logout' . ($isActive ? ' active' : '');
-        echo '<div class="main-nav-footer">';
-        echo '<a class="' . e($classes) . '" href="' . e(baseUrl((string) $logoutItem['path'])) . '" data-tooltip="' . e((string) $logoutItem['label']) . '" title="' . e((string) $logoutItem['label']) . '">';
-        echo '<span class="main-nav-link-icon">' . getNavigationIconSvg((string) $logoutItem['key']) . '</span>';
-        echo '<span class="main-nav-link-label">' . e((string) $logoutItem['label']) . '</span>';
-        echo '</a>';
-        echo '</div>';
-    }
-
     echo '</div>';
     echo '</aside>';
 }
